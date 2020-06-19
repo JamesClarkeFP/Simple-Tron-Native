@@ -1,0 +1,17 @@
+{
+  "name": "TronFrontend",
+  "displayName": "TronFrontend",
+  "expo": {
+    "name": "TronFrontend",
+    "slug": "TronFrontend",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
