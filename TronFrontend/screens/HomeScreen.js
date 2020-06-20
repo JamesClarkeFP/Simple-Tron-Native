@@ -1,15 +1,19 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button,} from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, ImagePropTypes,} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { getAvailable } from '../store/actions'
 import { MonoText } from '../components/StyledText';
+//import { useDispatch } from "react-redux";
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       <Button color='red' title='red team'/>
       <Button title='blue team'/>
+      <Text>{props.hi}bye</Text>
     </View>
   );
 }
