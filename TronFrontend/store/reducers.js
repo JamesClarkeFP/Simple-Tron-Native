@@ -10,7 +10,7 @@ const state = (state = initialState, action) => {
   let tempList = []
   switch (action.type) {
     case GET_AVAILABLE:
-      return { ...state, notes: action.notes };
+      return { ...state, team: action.team };
 
     default:
       return state;

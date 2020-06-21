@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/14.3.0/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add reduz
+  /usr/local/Cellar/node/14.3.0/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add react-dpm
 
 PATH: 
   /Users/phoenix/.pyenv/versions/3.7.2/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/phoenix/.ebcli-virtual-env/executables:/Users/phoenix/.pyenv/versions/3.7.2/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/reduz: Not found
+  Error: https://registry.yarnpkg.com/react-dpm: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:66987:18)
       at Request.self.callback (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:140748:22)
       at Request.emit (events.js:315:20)
@@ -54,7 +54,7 @@ npm manifest:
       "expo-splash-screen": "^0.2.3",
       "expo-web-browser": "~8.2.0",
       "react": "~16.9.0",
-      "react-dom": "^16.13.1",
+      "react-dom": "~16.9.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
       "react-native-gesture-handler": "~1.6.0",
       "react-native-safe-area-context": "0.7.3",
@@ -5906,15 +5906,15 @@ Lockfile:
       shell-quote "^1.6.1"
       ws "^3.3.1"
   
-  react-dom@^16.13.1:
-    version "16.13.1"
-    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
-    integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
+  react-dom@~16.9.0:
+    version "16.9.0"
+    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.9.0.tgz#5e65527a5e26f22ae3701131bcccaee9fb0d3962"
+    integrity sha512-YFT2rxO9hM70ewk9jq0y6sQk8cL02xm4+IzYBz75CQGlClQQ1Bxq0nhHF6OtSbit+AIahujJgb/CPRibFkMNJQ==
     dependencies:
       loose-envify "^1.1.0"
       object-assign "^4.1.1"
       prop-types "^15.6.2"
-      scheduler "^0.19.1"
+      scheduler "^0.15.0"
   
   react-is@^16.12.0, react-is@^16.13.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
     version "16.13.1"
@@ -6367,14 +6367,6 @@ Lockfile:
     version "0.15.0"
     resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.15.0.tgz#6bfcf80ff850b280fed4aeecc6513bc0b4f17f8e"
     integrity sha512-xAefmSfN6jqAa7Kuq7LIJY0bwAPG3xlCj0HMEBQk1lxYiDKZscY2xJ5U/61ZTrYbmNQbXa+gc7czPkVo11tnCg==
-    dependencies:
-      loose-envify "^1.1.0"
-      object-assign "^4.1.1"
-  
-  scheduler@^0.19.1:
-    version "0.19.1"
-    resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
-    integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
     dependencies:
       loose-envify "^1.1.0"
       object-assign "^4.1.1"

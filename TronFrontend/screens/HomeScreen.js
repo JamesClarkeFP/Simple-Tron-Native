@@ -1,21 +1,44 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, ImagePropTypes,} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { getAvailable } from '../store/actions'
-import { MonoText } from '../components/StyledText';
-//import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react'
 
 export default function HomeScreen(props) {
   const dispatch = useDispatch();
+  const team = useSelector(state => state.team.team)
+  
+  //Component did mount hook
+  useEffect(() => {
+    const doit = setInterval(() => dispatch(getAvailable()), 1000)
+  }, [])
 
-  return (
-    <View style={styles.container}>
-      <Button color='red' title='red team'/>
-      <Button title='blue team'/>
-      <Text>{props.hi}bye</Text>
-    </View>
-  );
+  return(
+    team.map((thing) => {
+      if (thing.team == "both"){
+        return (
+          <View style={styles.container}>
+            <Button color='red' title='red team'/>
+            <Button title='blue team'/>
+          </View>
+        );
+      } else if (thing.team=="red"){
+        return (
+          <View style={styles.container}>
+            <Button color='red' title='red team'/>
+          </View>
+        );
+      } else if (thing.team=="blue"){
+        return (
+          <View style={styles.container}>
+            <Button title='blue team'/>
+          </View>
+        );
+      }
+
+    })
+  )
 }
 
 HomeScreen.navigationOptions = {

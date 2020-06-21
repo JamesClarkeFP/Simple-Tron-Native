@@ -7,23 +7,36 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 
-const Stack = createStackNavigator();
+import ReduxThunk from "redux-thunk";
+import {createStore, combineReducers, applyMiddleware } from 'redux'
+import state from "./store/reducers";
+import {Provider} from 'react-redux'
 
 export default function App(props) {
+  const rootReducer = combineReducers({
+    team: state
+  });
+  
+  const store = createStore(
+    rootReducer, applyMiddleware(ReduxThunk)
+  );
   const isLoadingComplete = useCachedResources();
+  const Stack = createStackNavigator();
 
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-        <NavigationContainer linking={LinkingConfiguration}>
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+          <NavigationContainer linking={LinkingConfiguration}>
+            <Stack.Navigator>
+              <Stack.Screen name="Root" component={BottomTabNavigator} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </Provider>
     );
   }
 }
