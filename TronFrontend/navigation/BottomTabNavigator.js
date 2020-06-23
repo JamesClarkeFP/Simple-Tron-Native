@@ -25,7 +25,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Links"
+        name="Grid"
         component={LinksScreen}
         options={{
           title: 'Play',

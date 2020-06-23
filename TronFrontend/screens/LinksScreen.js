@@ -3,50 +3,54 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { useEffect } from 'react'
+import { getGrid, setGrid } from '../store/actions'
+import { useDispatch, useSelector } from "react-redux";
 
 export default function LinksScreen() {
+  const endpoint='http://a31f652467a434deaa17267893363707-1252241133.eu-west-2.elb.amazonaws.com:8000/tron/board/1'
+  const dispatch = useDispatch();
+  const board = useSelector(state => state.state)
+
+  useEffect(() => {
+    const doit = setInterval(() => dispatch(getGrid()), 1000)
+    //const doit2 = setInterval(() => dispatch(setGrid({"board": "[[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,2,0,0,0,0,0,0],[0,1,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,1,1,1,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]"})), 10000)
+  }, [])
+
+  function getColour(x,y){
+    if (board.grid[y][x] == 0) {
+      return 'grey'
+    }
+    if (board.grid[y][x] == 1) {
+      return 'red'
+    }
+    if (board.grid[y][x] == 2) {
+      return 'blue'
+    }
+  }
+
+  let rows = []
+  for (let y=0; y < 11; y++){
+    for (let x=0; x < 10; x++){
+      let colour = getColour(x,y)
+      rows.push(
+        <View style={{top: (y* 50) + 50, left: (x*50) + 400, height: 40,width:40, backgroundColor: colour, position:'absolute'}} />
+      )
+    }
+  }
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <OptionButton
-        icon="md-school"
-        label="Read the Expo documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
-      />
-
-      <OptionButton
-        icon="md-compass"
-        label="Read the React Navigation documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
-      />
-
-      <OptionButton
-        icon="ios-chatboxes"
-        label="Ask a question on the forums"
-        onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
-        isLastOption
-      />
-    </ScrollView>
-  );
-}
-
-function OptionButton({ icon, label, onPress, isLastOption }) {
-  return (
-    <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
-      <View style={{ flexDirection: 'row' }}>
-        <View style={styles.optionIconContainer}>
-          <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
-        </View>
-        <View style={styles.optionTextContainer}>
-          <Text style={styles.optionText}>{label}</Text>
-        </View>
-      </View>
-    </RectButton>
+    <View style={styles.container}>
+      {rows}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: '#fafafa',
   },
   contentContainer: {

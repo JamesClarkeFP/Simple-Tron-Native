@@ -5,11 +5,10 @@ import { getAvailable, setTeam } from '../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from 'react'
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const team = useSelector(state => state.state.team)
   const myTeam = useSelector(state => state.state.myTeam)
-  console.log(myTeam)
 
   //Component did mount hook
   useEffect(() => {
@@ -21,8 +20,7 @@ export default function HomeScreen() {
   if (team == "both"){
     return (
       <View style={styles.container}>
-        <Text>{myTeam}</Text>
-        <Button color='red' title='red team' onPress={() => dispatch(setTeam('blue'))}/>
+        <Button color='red' title='red team' onPress={() => {dispatch(setTeam('blue')); navigation.navigate('Grid')}}/>
         <Button title='blue team' onPress={() => dispatch(setTeam('red'))}/>
       </View>
     );
