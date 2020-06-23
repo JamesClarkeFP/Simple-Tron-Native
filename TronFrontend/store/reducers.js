@@ -1,10 +1,12 @@
 import { GET_AVAILABLE, GET_GRID } from "./actions";
 import { SET_TEAM, SET_GRID} from "./actions";
+import { START_GAME} from "./actions";
 
 const initialState = {
     "team":"both",
     "myTeam":"none",
-    "grid":"[[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]"
+    "started":"false",
+    "grid":"[[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]",
 };
   
 const state = (state = initialState, action) => {
@@ -17,6 +19,8 @@ const state = (state = initialState, action) => {
         return { ...state, grid: action.board}
     case SET_GRID:
         return { ...state, grid: action.grid}
+    case START_GAME:
+        return { ...state, started: action.started}
     default:
       return { ...state };
   }

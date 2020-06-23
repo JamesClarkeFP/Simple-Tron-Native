@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View , Button} from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { useEffect } from 'react'
-import { getGrid, setGrid } from '../store/actions'
+import { getGrid, setGrid , startGame, setTeam} from '../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 
 export default function LinksScreen() {
@@ -29,18 +29,31 @@ export default function LinksScreen() {
     }
   }
 
-  let rows = []
+  let rows = [] 
   for (let y=0; y < 11; y++){
     for (let x=0; x < 10; x++){
       let colour = getColour(x,y)
       rows.push(
-        <View style={{top: (y* 50) + 50, left: (x*50) + 400, height: 40,width:40, backgroundColor: colour, position:'absolute'}} />
+        <View style={{top: (y* 50) + 100, left: (x*50) + 450, height: 40,width:40, backgroundColor: colour, position:'absolute'}} />
       )
     }
+  }
+  
+  let alternative = []
+  if (board.started == 'false') {
+    alternative.push(<Button title='start game' style={styles.button} color='green' onPress={() => dispatch(startGame('true'))} />)
+  } else {
+    alternative.push(<Button title='stop game' style={styles.button} color='green' onPress={() => dispatch(startGame('false'))} />)
+  }
+  function twoFunc(){
+    dispatch(setGrid({"board" : "[[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]]"}))
+    dispatch(startGame('false'))
   }
 
   return (
     <View style={styles.container}>
+      <Button title='start game' style={styles.button} color='green' onPress={() => dispatch(startGame('true'))} />
+      <Button title='reset game' style={styles.button} color='grey' onPress={ () => twoFunc()}/>
       {rows}
     </View>
   );
@@ -49,9 +62,15 @@ export default function LinksScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: '#fafafa',
+    //alignItems: "center",
+    justifyContent: "bottom",
+    //backgroundColor: '#fafafa',
+  },
+  button: {
+    //flex: 1,
+    bottom: 0,
+    left: 0,
+    position: "absolute"
   },
   contentContainer: {
     paddingTop: 15,
