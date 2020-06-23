@@ -14,7 +14,7 @@ import {Provider} from 'react-redux'
 
 export default function App(props) {
   const rootReducer = combineReducers({
-    team: state
+    state: state
   });
   
   const store = createStore(

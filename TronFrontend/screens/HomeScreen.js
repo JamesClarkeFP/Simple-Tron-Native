@@ -1,44 +1,47 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, ImagePropTypes,} from 'react-native';
-import { getAvailable } from '../store/actions'
+import { getAvailable, setTeam } from '../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from 'react'
 
-export default function HomeScreen(props) {
+export default function HomeScreen() {
   const dispatch = useDispatch();
-  const team = useSelector(state => state.team.team)
-  
+  const team = useSelector(state => state.state.team)
+  const myTeam = useSelector(state => state.state.myTeam)
+  console.log(myTeam)
+
   //Component did mount hook
   useEffect(() => {
     const doit = setInterval(() => dispatch(getAvailable()), 1000)
   }, [])
 
-  return(
-    team.map((thing) => {
-      if (thing.team == "both"){
-        return (
-          <View style={styles.container}>
-            <Button color='red' title='red team'/>
-            <Button title='blue team'/>
-          </View>
-        );
-      } else if (thing.team=="red"){
-        return (
-          <View style={styles.container}>
-            <Button color='red' title='red team'/>
-          </View>
-        );
-      } else if (thing.team=="blue"){
-        return (
-          <View style={styles.container}>
-            <Button title='blue team'/>
-          </View>
-        );
-      }
-
-    })
-  )
+  //Displays the buttons for the available teams
+  //Could be abstracted to its own component
+  if (team == "both"){
+    return (
+      <View style={styles.container}>
+        <Text>{myTeam}</Text>
+        <Button color='red' title='red team' onPress={() => dispatch(setTeam('blue'))}/>
+        <Button title='blue team' onPress={() => dispatch(setTeam('red'))}/>
+      </View>
+    );
+  } else if (team =="red"){
+    return (
+      <View style={styles.container}>
+        <Button color='red' title='red team' onPress={() => dispatch(setTeam('none'))}/>
+      </View>
+    );
+  } else if (team =="blue"){
+    return (
+      <View style={styles.container}>
+        <Button title='blue team' onPress={() => dispatch(setTeam('none'))}/>
+      </View>
+    );
+  } else {
+    return (<></>)
+  }
+  
 }
 
 HomeScreen.navigationOptions = {
