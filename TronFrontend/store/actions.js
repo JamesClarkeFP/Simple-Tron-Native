@@ -3,6 +3,7 @@ export const SET_TEAM = "SET_TEAM"
 export const GET_GRID = "GET_GRID"
 export const SET_GRID = "SET_GRID"
 export const START_GAME = "START_GAME"
+export const START_GAME_NOW = "START_GAME_NOW"
 
 //const proxy = 'https://cors-anywhere.herokuapp.com/'
 const gridEndpoint =    'http://a90274ef4af5a4620b2c6c6ee77bd7e2-1502387468.eu-west-2.elb.amazonaws.com:8000/tron/board/'
@@ -50,11 +51,13 @@ export const getGrid = () => {
       let data = JSON.parse(resData.board)
       
       //////// This converts the basic 2d array to one that my program can render values with easily
-        for (let y = 0; y<11 ; y++){
+      let key = 0
+      for (let y = 0; y<11 ; y++){
         for (let x = 0; x<10 ; x++){
-        data[y][x] = {x:x, y:y, value: data[y][x]}
+          data[y][x] = {x:x, y:y, value: data[y][x], key:key}
+          key++
         }
-        }
+      }
       //////////
 
       dispatch({ type: GET_GRID, board: data });
@@ -97,5 +100,11 @@ export const startGame = (started) => {
       const resData = await response.json();
 
       dispatch({ type: START_GAME, started: started });
+    }
+}
+
+export const startGameNow = (started) => {
+    return dispatch => {
+        dispatch({ type: START_GAME_NOW, startedNow: started });
     }
 }
