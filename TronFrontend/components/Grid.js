@@ -4,16 +4,44 @@ import * as React from 'react';
 import { StyleSheet, Text, View , Button, Animated} from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { useEffect, useRef } from 'react'
-import { getGrid, setGrid , startGame, startGameNow, setTeam} from '../store/actions'
+import { getGrid, setGrid , startGame, startGameNow, setTeam, setSquare} from '../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import Cell from '../components/Cell'
 
 export default function Grid() {
+    const[position, setPosition] = React.useState({x:0, y:6})
+    const[facing, setFacing] = React.useState('right')
+    //How do i colour the position?
+    //i guess run a dispatch to colour a new cell
+    //which means setting the 0.5 to a 1?
+
+    function nextPosition(){
+        console.log('hi')
+        if (facing == 'up'){
+            let x = position.x
+            let y = position.y
+            setPosition({x:x, y:(y+1)})
+        } else if (facing == 'right'){
+            let x = position.x
+            let y = position.y
+            setPosition({x:(x+1), y:y})
+        } else if (facing == 'down'){
+            let x = position.x
+            let y = position.y
+            setPosition({x:x,y:(y-1)})
+        } else {
+            let x = position.x
+            let y = position.y
+            setPosition({x:(x-1),y:y})
+        }
+    }
+    //loop at a given time i guess 
   useEffect(() => {
-    const doit = setInterval(() => dispatch(getGrid()), 200)
+    const doit = setInterval(() => dispatch(getGrid()), 1000)
   }, [])    
   let grid = useSelector(state => state.state.grid)
   const dispatch = useDispatch();
+
 
   return (
     <>

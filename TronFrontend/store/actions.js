@@ -50,7 +50,7 @@ export const getGrid = () => {
       const resData = await response.json();
       let data = JSON.parse(resData.board)
       
-      //////// This converts the basic 2d array to one that my program can render values with easily
+      //////// This converts the basic 2d array to one that my program can render values with easily //////
       let key = 0
       for (let y = 0; y<11 ; y++){
         for (let x = 0; x<10 ; x++){
@@ -82,6 +82,39 @@ export const setGrid = (grid) => {
       //console.log(resData.board)
       dispatch({ type: SET_GRID, grid: JSON.parse(resData.board) });
     }
+}
+
+export const setSquare = (xin,yin,value) => {
+    return async dispatch => {
+      //Gets the current grid state from the api
+      const response = await fetch(gridEndpoint + 1);
+      const resData = await response.json();
+      let data = JSON.parse(resData.board)
+      //////// This converts the basic 2d array to one that my program can render values with easily //////
+      for (let y = 0; y<11 ; y++){
+        for (let x = 0; x<10 ; x++){
+            if (y == yin && x==xin){
+                data[y][x] = value //replaces the value with the one desired  
+            }
+        }
+      }
+      //////////
+      //Sets the current grid state from the api
+      const response2 = await fetch(gridEndpoint + '1',{
+        method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify({board:JSON.stringify(data)}) // body data type must match "Content-Type" header
+      });
+      const resData2 = await response2.json();
+
+      dispatch({ type: SET_GRID, grid: JSON.parse(resData2.board)});
+    };
 }
 
 export const startGame = (started) => {
