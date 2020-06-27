@@ -73,7 +73,6 @@ export const getGrid = () => {
 }
 
 export const setGrid = (grid) => {
-    //console.log(grid)
     return async dispatch => {
       const response = await fetch(gridEndpoint + '1',{
         method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
@@ -92,19 +91,25 @@ export const setGrid = (grid) => {
     }
 }
 
-export const setSquare = (xin,yin,value) => {
+export const setSquare = (grid, xin,yin,value) => {
   
     return async dispatch => {
-      //Gets the current grid state from the api
-      const response = await fetch(gridEndpoint + 1);
-      const resData = await response.json();
-      let data = JSON.parse(resData.board)
-      //////// This converts the basic 2d array to one that my program can render values with easily //////
+      //Converts the complex 2d array to the simple one
+      let data = []
+      for (let y = 0; y<11 ; y++){
+        let temprow = []
+        for (let x = 0; x<10 ; x++){
+          temprow.push(grid[y][x].value)
+        }
+        data.push(temprow)
+      }
+
       let collision = false 
       for (let y = 0; y<11 ; y++){
         for (let x = 0; x<10 ; x++){
             if (y == yin && x==xin){ //this only passes when it is the square we are adding  
                 if (data[y][x] != 0.5){
+                  //console.log(data[y][x])
                   collision = true
                 } else {
                   data[y][x] = value //replaces the value with the one desired

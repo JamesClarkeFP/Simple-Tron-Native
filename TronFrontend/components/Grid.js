@@ -12,6 +12,7 @@ import Cell from '../components/Cell'
 import {useCount} from '../store/count-context'
 
 export default function Grid() {
+  let grid = useSelector(state => state.state.grid)
   const dispatch = useDispatch();
   const [count, setCount] = useCount()
   const[facing, setFacing] = useState('right')
@@ -33,7 +34,7 @@ export default function Grid() {
   //This draws the square on screen
   if (count >= 0 && rendered == false){ 
     setRendered(true)
-    dispatch(setSquare(position.x, position.y, 1))
+    dispatch(setSquare(grid, position.x, position.y, 1))
 
   }
 
@@ -62,7 +63,7 @@ export default function Grid() {
     const doit = setInterval(() => dispatch(getGrid()), 500)
   }, [])
 
-  let grid = useSelector(state => state.state.grid)
+
 
   const[text, setText] = useState('')
   if (text.slice(-1) == 'w' && facing != 'up'){
