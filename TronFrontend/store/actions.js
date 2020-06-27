@@ -4,6 +4,7 @@ export const GET_GRID = "GET_GRID"
 export const SET_GRID = "SET_GRID"
 export const START_GAME = "START_GAME"
 export const START_GAME_NOW = "START_GAME_NOW"
+export const SET_LOOP = 'SET_LOOP'
 
 //const proxy = 'https://cors-anywhere.herokuapp.com/'
 const gridEndpoint =    'http://a90274ef4af5a4620b2c6c6ee77bd7e2-1502387468.eu-west-2.elb.amazonaws.com:8000/tron/board/'
@@ -17,6 +18,13 @@ export const getAvailable = () => {
     
     dispatch({ type: GET_AVAILABLE, team: resData.team });
   };
+}
+
+export const setLoop = (number) =>{
+  return dispatch => {
+    dispatch({ type: SET_LOOP, gameLoop: number})
+  }
+  
 }
 
 export const setTeam = (colour) => {
@@ -85,6 +93,7 @@ export const setGrid = (grid) => {
 }
 
 export const setSquare = (xin,yin,value) => {
+  
     return async dispatch => {
       //Gets the current grid state from the api
       const response = await fetch(gridEndpoint + 1);

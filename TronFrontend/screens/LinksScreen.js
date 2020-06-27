@@ -1,16 +1,23 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View , Button} from 'react-native';
+import { StyleSheet, Text, View , Button, TextInput} from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
-import { useEffect } from 'react'
-import { getGrid, setGrid , startGame, setTeam} from '../store/actions'
+import { useEffect, useRef, useState } from 'react'
+import { getGrid, setGrid , startGame, setTeam, setLoop} from '../store/actions'
 import { useDispatch, useSelector } from "react-redux";
+import {CountProvider, useCount} from '../store/count-context'
 import  Grid  from '../components/Grid'
+
+function StartGame() {
+    const [count, setCount] = useCount()
+    const increment = () => setCount(c => c + 1)
+    return <Button title='start game' style={styles.button} color='green' onPress={increment} />
+}
 
 export default function LinksScreen() {
   const dispatch = useDispatch();
-  
+
   function twoFunc(){
     dispatch(setGrid({
       "id": 1,
@@ -18,25 +25,20 @@ export default function LinksScreen() {
   }))
     dispatch(startGame('false'))
   }
-
-  function initiateCountdown(){
-    let d = new Date();
-    let n = d.getTime(); //this number plus 5 seconds will be sent to the api
-    dispatch(startGame(n + 5000))
-  }
-
   return (
-    <View style={styles.container}>
-      <Button title='start game' style={styles.button} color='green' onPress={() => initiateCountdown() } />
-      <Button title='reset game' style={styles.button} color='grey' onPress={ () => twoFunc()}/>
-      <Grid />
-    </View>
+    <CountProvider>
+      <View style={styles.container}>
+        <StartGame />
+        <Button title='reset game' style={styles.button} color='grey'  onPress={ () => twoFunc()}/>
+        <Grid />
+      </View>
+    </CountProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     //alignItems: "center",
     //justifyContent: "bottom",
     //backgroundColor: '#fafafa',

@@ -1,12 +1,13 @@
 import { GET_AVAILABLE, GET_GRID } from "./actions";
 import { SET_TEAM, SET_GRID} from "./actions";
 import { START_GAME, START_GAME_NOW} from "./actions";
-
+import { SET_LOOP} from "./actions"
 const initialState = {
     "team":"both",
     "myTeam":"none",
     "started":"false",
     "startedNow":"false",
+    "gameLoop":-1,
     "grid":
         [[{x: 0, y: 0, value: 0.5}, {x: 1, y: 0, value: 0.5}, {x: 2, y: 0, value: 0.5}, {x: 3, y: 0, value: 0.5}, {x: 4, y: 0, value: 0.5}, {x: 5, y: 0, value: 0.5}, {x: 6, y: 0, value: 0.5}, {x: 7, y: 0, value: 0.5}, {x: 8, y: 0, value: 0.5}, {x: 9, y: 0, value: 0.5}],
         [{x: 0, y: 1, value: 0.5}, {x: 1, y: 1, value: 0.5}, {x: 2, y: 1, value: 0.5}, {x: 3, y: 1, value: 0.5}, {x: 4, y: 1, value: 0.5}, {x: 5, y: 1, value: 0.5}, {x: 6, y: 1, value: 0.5}, {x: 7, y: 1, value: 0.5}, {x: 8, y: 1, value: 0.5}, {x: 9, y: 1, value: 0.5}],
@@ -35,6 +36,8 @@ const state = (state = initialState, action) => {
         return { ...state, started: action.started}
     case START_GAME_NOW:
         return { ...state, startedNow: action.startedNow}
+    case SET_LOOP:
+        return { ...state, gameLoop: action.gameLoop}
     default:
       return { ...state };
   }

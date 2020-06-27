@@ -12,7 +12,7 @@ import {createStore, combineReducers, applyMiddleware } from 'redux'
 import state from "./store/reducers";
 import {Provider} from 'react-redux'
 
-export default function App(props) {
+export default function App() {
   const rootReducer = combineReducers({
     state: state
   });
