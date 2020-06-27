@@ -16,7 +16,7 @@ export default function Grid() {
   const [count, setCount] = useCount()
   const[facing, setFacing] = useState('right')
   const[rendered,setRendered] = useState(false)
-  const[position, setPosition] = useState({x:0, y:0})
+  const[position, setPosition] = useState({x:-1, y:0})
   useEffect(()=>{
 
     //do all the things that need to be done on each render
@@ -32,8 +32,9 @@ export default function Grid() {
   
   //This draws the square on screen
   if (count >= 0 && rendered == false){ 
-    dispatch(setSquare(position.x, position.y, 1))
     setRendered(true)
+    dispatch(setSquare(position.x, position.y, 1))
+
   }
 
   function nextPosition(position){
@@ -56,7 +57,7 @@ export default function Grid() {
     }
   }
 
-  //Updates the grid from the rest api every second
+  //Updates the grid from the rest api every half second
   useEffect(() => {
     const doit = setInterval(() => dispatch(getGrid()), 500)
   }, [])
@@ -77,7 +78,7 @@ export default function Grid() {
   if (count >= 0){
     return (
       <>
-   <TextInput autoFocus={true} onChangeText={text => setText(text)} value={text} />
+      <TextInput autoFocus={true} onChangeText={text => setText(text)} value={text} />
         {
           grid.map((row) => {
               return(

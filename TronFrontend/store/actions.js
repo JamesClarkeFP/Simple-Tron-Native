@@ -100,13 +100,30 @@ export const setSquare = (xin,yin,value) => {
       const resData = await response.json();
       let data = JSON.parse(resData.board)
       //////// This converts the basic 2d array to one that my program can render values with easily //////
+      let collision = false 
       for (let y = 0; y<11 ; y++){
         for (let x = 0; x<10 ; x++){
-            if (y == yin && x==xin){
-                data[y][x] = value //replaces the value with the one desired  
+            if (y == yin && x==xin){ //this only passes when it is the square we are adding  
+                if (data[y][x] != 0.5){
+                  collision = true
+                } else {
+                  data[y][x] = value //replaces the value with the one desired
+                }
             }
         }
       }
+
+      //fills the screen on collision
+      if (collision == true){
+        for (let y = 0; y<11 ; y++){
+          for (let x = 0; x<10 ; x++){
+                data[y][x] = 1
+          }
+        }
+        collision =false 
+      }
+
+
       //////////
       //Sets the current grid state from the api
       const response2 = await fetch(gridEndpoint + '1',{
